@@ -1,0 +1,101 @@
+<h1>这是HOME组件</h1>
+<hr>
+
+<h2>引入图片</h2>
+<!--普通图片绑定-->
+<img src="assets/images/02.png" alt="收藏">
+<!--动态图片绑定-->
+<img [src]="picUrl" alt="">
+<hr>
+
+<h2>循环数据 显示数据索引（key）</h2>
+<ul>
+  <li *ngFor="let item of list let key=index">
+    <p>{{key + 1}}.标题：{{item.title}}</p>
+    <p>{{item.content}}</p>
+  </li>
+</ul>
+
+<!--template 循环数据-->
+<!--<ul>-->
+<!--  <li template="ngFor let item of list">-->
+<!--    {{item}}-->
+<!--  </li>-->
+<!--</ul>-->
+<!--<hr>-->
+
+<h2>条件判断语句 *ngIf</h2>
+<div *ngIf="flag">
+  <img src="assets/images/02.png" alt="">
+</div>
+<div *ngIf="!flag">
+  <img src="assets/images/01.png" alt="">
+</div>
+
+<ul>
+  <li *ngFor="let item of list let key=index">
+    <span *ngIf="key==1" class="red">{{key}} --- {{item.title}}</span>
+    <span *ngIf="key!=1">{{key}} --- {{item.title}}</span>
+  </li>
+</ul>
+<hr>
+
+<h2>条件判断语句 *ngSwitch</h2>
+<div [ngSwitch]="orderStatus">
+  <div *ngSwitchCase="1">已经支付</div>
+  <div *ngSwitchCase="2">确认订单</div>
+  <div *ngSwitchCase="3">已经发货</div>
+  <div *ngSwitchCase="4">已经收获</div>
+  <div *ngSwitchDefault>无效订单</div>
+</div>
+<hr>
+
+<h2>属性 [ngClass] 和 [ngStyle]</h2>
+<div class="red">class演示 (尽量不要用dom来改变class)</div>
+<div [ngClass]="{blue:true,red:false}">ngClass演示</div>
+<div [ngClass]="{orange:flag,red:!flag}">ngClass演示</div>
+<hr>
+
+<h3>循环数组，让数组的第一个元素样式为red 第二个为orange</h3>
+<ul>
+  <li *ngFor="let item of list let key=index" [ngClass]="{red:key==0,orange:key==1}">{{key}} === {{item.title}}</li>
+</ul>
+
+<p style="color: red">我是p标签</p>
+<p [ngStyle]="{color:'blue'}">我是p标签</p>
+<p [ngStyle]="{color:attr}">我是p标签</p>
+<hr>
+
+<h2>管道</h2>
+{{today|date:"yyyy-mm-dd hh:mm:ss"}}
+<hr>
+
+<h2>事件</h2>
+<strong>{{title}}</strong>
+<br>
+<br>
+<button (click)="run()">执行事件</button>
+<br>
+<button (click)="getData()">执行事件获取数据</button>
+<br>
+<button (click)="setData()">执行方法改变属性的数据</button>
+<br>
+<button (click)="runEvent($event)">执行方法获取事件对象</button>
+<hr>
+
+<h2>表单事件 事件对象</h2>
+keyDown<input type="text" (keydown)="keyDown($event)">
+<br>
+keyUp<input type="text" (keyup)="keyUp($event)">
+<hr>
+
+<h2>双向数据绑定 --- MVVM 只针对表单</h2>
+<input type="text" [(ngModel)]="keywords">{{keywords}}
+<br>
+<br>
+<button (click)="changeKeywords()">改变keywords的值</button>
+<button (click)="getKeywords()">获取keywords的值</button>
+<br>
+<br>
+<br>
+<br>
