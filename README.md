@@ -36,3 +36,35 @@
         1. 须在app.module.ts文件中引入FormsModule模块'import { FormsModule } from' 
         2. 使用方式'<input [(ngModel)]="inputValue">'*/
     ```
+
+
+- demo02：
+    1. 制作在线预约表单；
+    2. 制作todolist，并且通过服务实现数据持久化
+    ```服务
+      1. 创建服务： ng g service services(服务文件夹)/storage（服务文件名）
+      2. 在 app.module.ts 里面引入创建的服务 
+        - import { StorageService } from './services/storage.service';
+        - @NgModule({ 
+            declarations: [ 
+                AppComponent, 
+                HeaderComponent, 
+                FooterComponent, 
+                NewsComponent, 
+                TodolistComponent ],
+            imports: [ 
+                BrowserModule, 
+                FormsModule ],
+            providers: [StorageService], // 引用服务
+            bootstrap: [AppComponent] 
+          })
+    ```
+    3. 在使用页面中引入服务
+    ```服务
+        - import { StorageService } from '../../services/storage.service';
+        - constructor(private storage: StorageService) { } // 声明服务
+        - addData(){
+            this.list.push(this.username); 
+            this.storage.set('todolist',this.list); // 使用服务
+          }
+    ``` 
