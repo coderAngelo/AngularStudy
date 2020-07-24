@@ -68,3 +68,18 @@
             this.storage.set('todolist',this.list); // 使用服务
           }
     ``` 
+  
+  -demo03:
+    1. dom操作：原生js 和 @ViewChild，须在ngAfterViewInit(){}函数中进行操作；
+    2. 父子组件之间的信息通讯
+    ```信息通讯
+        一、 父组件传值给子组件
+            1. 父组件在调用子组件时进行自定义属性 <app-header [msg]="msg"></app-header>
+            2. 在子组件中引用input模块 import { Component, OnInit ,Input } from '@angular/core';
+            3. 在子组件中接收 @Input() msg:string
+  
+        二、父组件获取子组件的数据和方法 @ViewChild
+  
+        三、@Output的使用
+    ```
+    3. 生命周期函数
