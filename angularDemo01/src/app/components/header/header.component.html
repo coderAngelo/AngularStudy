@@ -1,0 +1,75 @@
+<h1>这是头部组件</h1>
+<hr>
+<h2>angular 绑定<u>数据</u>></h2>
+<!--普通数据绑定-->
+<h4>1 --- {{title}}</h4>
+<h4>2 --- {{msg}}</h4>
+<!--<h4>3 -&#45;&#45; {{userName}}</h4>-->
+<h4>4 --- {{student}}</h4>
+<!--对象数据绑定-->
+<h4>5.1 --- {{userInfo.username}}</h4>
+<h4>5.2 --- {{userInfo.age}}</h4>
+<!--先声明，后赋值-->
+<h4>{{message}}</h4>
+
+<hr>
+<h2>angular 绑定<u>属性</u>></h2>
+<!--普通属性绑定-->
+<div title="我是一个div">鼠标指我</div>
+<br>
+<!--动态数据绑定-->
+<div [title]="student">张三</div>
+
+<hr>
+<h2>angular 绑定 <u>HTML</u></h2>
+<!--正常绑定-->
+<div>{{content}}</div>
+<br>
+<!--编译绑定-->
+<span [innerHTML]="content"></span>
+
+<hr>
+<h2>angular 允许做简单的数据运算</h2>
+<h4>1+2={{1 + 2}}</h4>
+
+<hr>
+<h2>angular 数据循环</h2>
+<ul>
+  <li *ngFor="let item of arr">
+    {{item}}
+  </li>
+</ul>
+
+<br>
+
+<ol>
+  <li *ngFor="let item of list">
+    {{item}}
+  </li>
+</ol>
+
+<ul>
+  <li *ngFor="let item of items">
+    {{item}}
+  </li>
+</ul>
+
+<hr>
+<ul>
+  <li *ngFor="let item of userList">
+    {{item.userName}} ----- {{item.age}}
+  </li>
+</ul>
+
+<br>
+
+<ul>
+  <li *ngFor="let item of cars">
+    <h4>品牌 ----- {{item.cate}}</h4>
+    <ol>
+      <li *ngFor="let car of item.list">
+        {{car.title}} ----- {{car.price}}
+      </li>
+    </ol>
+  </li>
+</ul>

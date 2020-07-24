@@ -1,0 +1,28 @@
+<h1>这是home组件</h1>
+<br>
+<br>
+
+<h3>原生js dom操作演示</h3>
+<div id="box"> this is box</div>
+<div id="box1" *ngIf="flag">this is box1</div>
+<br>
+<br>
+<hr>
+<br>
+
+<h3>ViewChild获取dom节点</h3>
+<div #myBox>this is box</div>
+<app-news #myNews></app-news>
+<button (click)="getNewsRun()">获取子组件的方法</button>
+
+<hr>
+<app-transition></app-transition>
+<br>
+<br>
+<hr>
+<br>
+
+<h3>父子组件数据通讯</h3>
+<app-header [msg]="headerMsg"></app-header>
+<app-contents [run]="run"></app-contents>
+<app-footer (outer)="getFooterOuter($event)"></app-footer>
