@@ -69,7 +69,7 @@
           }
     ``` 
   
-  -demo03:
+- demo03:
     1. dom操作：原生js 和 @ViewChild，须在ngAfterViewInit(){}函数中进行操作；
     2. 父子组件之间的信息通讯
     ```信息通讯
@@ -83,3 +83,116 @@
         三、@Output的使用
     ```
     3. 生命周期函数
+    
+- demo04:
+    1. Promise 处理异步
+    2. Rxjs 处理异步
+    ```Rxjs
+        // 获取数据
+        import {Observable} from 'rxjs';
+            let stream = new Observable(observer => {
+                setTimeout(() => {
+                    observer.next('observable timeout');
+                }, 2000);
+            }); 
+        stream.subscribe(value => console.log(value))
+    
+  
+        // unsubscribe 取消订阅
+        let stream = new Observable(observer => {
+            let timeout = setTimeout(() => {
+                clearTimeout(timeout);
+                observer.next('observable timeout');
+            }, 2000);
+        }); 
+        let disposable = stream.subscribe(value => console.log(value));
+        setTimeout(() => {
+            //取消执行 
+            disposable.unsubscribe(); 
+        }, 1000);
+  
+  
+        // Rxjs 订阅后多次执行
+        let stream = new Observable<number>(observer => { 
+            let count = 0; 
+            setInterval(() => { 
+                observer.next(count++); 
+            }, 1000); 
+        }); 
+        stream.subscribe(value => console.log("Observable>"+value));
+  
+  
+        // Rxjs 工具函数 map：数据运算；  filter：数据过滤；
+  
+        Rxjs中文手册：https://cn.rx.js.org/
+    ```
+    3. angular 数据交互
+        1. angualr GET 请求
+        ```get
+            - 在app.module.ts中
+              import {HttpClientModule} from '@angular/common/http';
+              imports: [HttpClientModule]
+            
+            - 在使用的组件中
+              import {HttpClient} from "@angular/common/http";
+              constructor(public http:HttpClient) { }
+            
+            - 请求示例
+              var api = "http://a.itying.com/api/productlist"; 
+              this.http.get(api).subscribe(response => { 
+                console.log(response); 
+              });
+        ```
+  
+        2. angular POST 提交
+        ```post
+            - app.module.ts依赖于get相同
+            
+            - 在使用的组件中
+              import {HttpClient,HttpHeaders} from "@angular/common/http";
+            
+            - 上传示例
+              const httpOptions = { 
+                headers: new HttpHeaders({ 'Content-Type': 'application/json' }) 
+              };
+              var api = "http://127.0.0.1:3000/doLogin"; 
+              this.http.post(api,{username:'张三',age:'20'},httpOptions).subscribe(response => { console.log(response); });
+        ```
+       
+       3. angular JSONP 请求
+       ```jsonp
+            - 在app.module.ts中
+              import {HttpClientModule,HttpClientJsonpModule} from '@angular/common/http';
+              imports: [HttpClientModule, HttpClientJsonpModule ]
+            
+            - 在使用的组件中于get请求相同
+       
+            - 请求示例
+              var api = "http://a.itying.com/api/productlist"; 
+              this.http.jsonp(api,'callback').subscribe(response => { 
+                console.log(response); 
+              });
+       ```
+  
+        4. 第三方请求模块 axios
+        ```axios
+            - 安装
+              npm install axios --save
+       
+            - 在用的组件中引入
+              import axios from 'axios';
+       
+            - 请求示例 参考文档
+              axios.get('/user?ID=12345') 
+              .then(function (response) { 
+                // handle success 
+                console.log(response); 
+              })
+              .catch(function (error) { 
+                // handle error 
+                console.log(error); 
+              })
+              .then(function () { 
+                // always executed 
+              });
+        ```
