@@ -196,3 +196,129 @@
                 // always executed 
               });
         ```
+       
+- demo05
+    1. 路由概念：动态挂在组件；
+    2. 详细方法：
+       ```路由的配置
+        1. 创建组件 ng g component home
+        2. 找到 app-routing.module.ts 配置路由:
+            a. 引入组件：import {HomeComponent} from './components/home/home.component';
+            b. 配置路由：const routes: Routes = [
+                          {
+                            path: 'home',
+                            component: HomeComponent
+                          },
+                        ]
+        3. 使用路由：
+            a. 找到 app.component.html 根组件模板，配置 router-outlet 显示动态加载的路由
+            <h1>
+                <a routerLink="/home">首页</a> 
+                <a routerLink="/news">新闻</a> 
+            </h1> 
+       
+            <router-outlet></router-outlet>
+       ```       
+    3. 默认路由：匹配不到路由的时候加载的组件 或者跳转的路由
+        ```默认路由
+           const routes: Routes = [
+              { 
+                  path: '**',
+                  redirectTo:'home' 
+              }
+           ]
+        ```
+    4. 路由选中样式：routerLinkActive 设置 routerLink 默认选中路由
+        ```路由选中样式
+            <h1>
+                <a routerLink="/home" routerLinkActive="active">首页</a> 
+                <a routerLink="/news" routerLinkActive="active">新闻</a>
+            </h1>
+       
+            css样式表：
+                .active{ color:red; }
+        ```
+       
+    5. 动态路由:在路由中添加数据
+        ```动态路由
+          a. 配置动态路由
+              const routes: Routes = [
+                  {path: 'newscontent/:id', component: NewscontentComponent}, 
+                  { path: '', redirectTo: '/home', pathMatch: 'full' } 
+              ];
+              
+          b. 路由跳转
+              <a [routerLink]="[ '/newscontent/','123']">跳转到详情</a>
+          c. 获取路由中数据
+              1. 引入模块：import { ActivatedRoute} from
+              2. 声明模块：constructor( private route: ActivatedRoute) { }
+              3. 使用：ngOnInit() { 
+                          console.log(this.route.params); 
+                          this.route.params.subscribe(data=>this.id=data.id);
+                      }
+        ```
+
+    6. 动态路由的 js 跳转
+        ```
+            a. 引入模块：import {Router} from '@angular/router';
+            b. 配置：export class HomeComponent implements OnInit { 
+                        constructor(private router: Router) { } 
+                        ngOnInit() { }
+                        goNews(){ 
+                            this.router.navigate(['/news']); 
+                        } 
+                    }
+            c. 跳转：<button (click)="goNews()">动态路由 js 跳转</button>
+            d. 获取路由中的数据：
+                1. 引入模块：import {ActivatedRoute} from '@angular/router';
+                2. 声明模块：  constructor(public route: ActivatedRoute) {}
+                3. 获取：this.route.params.subscribe((data) => {
+                            console.log(data);
+                        });
+        ```
+       
+    7. get 传值路由的 js 跳转
+       ```
+            a. 引入模块：import { Router ,NavigationExtras} from '@angular/router';
+            b. 配置：  goNews(): void {  // get 传值
+                          const params = {
+                            queryParams: {
+                              aid: 1234,
+                            }
+                          };
+                      this.router.navigate(['news'], params);
+            c. 跳转：<button (click)="goNews()">get传值 跳转</button>
+            d. 获取路由中的数据：
+                1. 引入模块：import {ActivatedRoute} from '@angular/router';
+                2. 声明模块：  constructor(public route: ActivatedRoute) {}
+                3. 获取：this.route.queryParams.subscribe((data) => {
+                            console.log(data);
+                        });
+       ```
+       
+    8. 父子路由
+       ```
+       路由配置：
+           { 
+                path: 'news', 
+                component:NewsComponent, 
+                children: [ 
+                    { path:'newslist', component:NewslistComponent },
+                    {path:'newsadd', component:NewsaddComponent } 
+                ] 
+           }
+       
+       在父组件中添加：<router-outlet></router-outlet>
+       ```
+       
+- Demo06
+    1. 创建自定义模块：ng g module module/home --routing
+    2. 自定义模块路由配置：
+       ```
+         {
+           path: 'product',
+           loadChildren: () => import('./modules/product/product.module').then((m) => m.ProductModule)
+         },
+       ```
+    3. 自定义模块内路由配置：与Demo05中的配置方法相同
+    

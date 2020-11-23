@@ -1,0 +1,25 @@
+<ul>
+  <li *ngFor="let item of list; let key=index;">
+    <!--  动态路由 routerLink 中如果路有前不加 / 会默认为当前组件的子路由  -->
+        <a [routerLink]="['/newContent/' , key]">{{key + 1}} --- {{item}}</a>
+
+    <!--    get 传值 通过 queryParams 携带数据-->
+<!--    <a [routerLink]="['/newContent']" [queryParams]="{aid:key}">get 传值</a>-->
+  </li>
+</ul>
+
+<br>
+<br>
+<hr>
+<br>
+
+<button (click)="goHome()">通过 js 跳转到首页</button>
+
+
+<hr>
+
+<button (click)="goNewContent()">通过 js 跳转到详情</button>
+
+<hr>
+
+<button (click)="goNews()">get传值 跳转</button>
